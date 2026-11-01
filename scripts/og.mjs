@@ -30,7 +30,7 @@ const bookCard = async (book) => {
   const front = await sharp(cover).resize({ height: 530, width: 400, fit: 'inside' }).png().toBuffer()
   const { width, height } = await sharp(front).metadata()
   const size = 62
-  const lines = wrap(book.tagline, 13, 4)
+  const lines = wrap(book.tagline, 11, 4)
   const top = 315 - ((lines.length - 1) * size * 1.28) / 2
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" font-family="Malgun Gothic">
     <text x="500" y="${top - 92}" font-size="30" font-weight="700" fill="#f2c9a1">${esc(categories[book.category])} 서평</text>
