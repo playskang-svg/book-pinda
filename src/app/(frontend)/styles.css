@@ -1651,3 +1651,7 @@ small {
   margin-top: auto;
   color: var(--ink-soft);
 }
+
+.photo-head h1 {
+  text-wrap: balance;
+}

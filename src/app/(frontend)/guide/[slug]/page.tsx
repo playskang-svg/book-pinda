@@ -46,8 +46,8 @@ export default async function GuidePage({ params }: Props) {
   const payload = await getClient()
   const others = await payload.find({ collection: 'guides', limit: 100, depth: 0, sort: 'order', pagination: false })
   const path = `/guide/${guide.slug}`
-  // A draft book comes back as a bare id for public readers, so it drops out of the list.
-  const picks = guide.picks.filter((pick) => typeof pick.book === 'object')
+  // The local API populates drafts too; a draft book has no public page or buy link yet.
+  const picks = guide.picks.filter((pick) => typeof pick.book === 'object' && pick.book._status === 'published')
 
   return (
     <article className="post">
