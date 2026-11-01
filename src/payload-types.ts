@@ -163,13 +163,13 @@ export interface Book {
   salePrice: number;
   points?: number | null;
   /**
-   * 세시간전에서 발급한 https://3ha.in/r/...
+   * 세시간전에서 발급한 https://3ha.in/r/... 비우면 버튼을 숨깁니다.
    */
-  kyoboUrl: string;
+  kyoboUrl?: string | null;
   /**
-   * 세시간전에서 발급한 https://3ha.in/r/...
+   * 세시간전에서 발급한 https://3ha.in/r/... 비우면 버튼을 숨깁니다.
    */
-  yes24Url: string;
+  yes24Url?: string | null;
   tagline: string;
   /**
    * 서평 맨 위 요약 상자와 검색 설명에 함께 쓰입니다.

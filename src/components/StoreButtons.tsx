@@ -11,14 +11,14 @@ export function StoreButtons({
   const stores = [
     { name: '교보문고', href: book.kyoboUrl },
     { name: '예스24', href: book.yes24Url },
-  ]
+  ].filter((store) => store.href)
   return (
     <div className={compact ? 'store-buttons store-buttons--compact' : 'store-buttons'}>
       {stores.map((store) => (
         <a
           aria-label={`${book.title} ${store.name}에서 할인 구매`}
           className="button button--buy"
-          href={store.href}
+          href={store.href ?? undefined}
           key={store.name}
           rel="sponsored nofollow noopener"
           target="_blank"

@@ -64,7 +64,7 @@ await payload.updateGlobal({ slug: 'navigation', data: navigation })
 console.log('categories', categories.length, 'pages', pages.length)
 
 const books = JSON.parse(fs.readFileSync('scripts/books.json', 'utf8'))
-for (const [index, { review, category, expectations, ...book }] of books.entries()) {
+for (const [index, { review, category, expectations, status, ...book }] of books.entries()) {
   await upsert(
     'books',
     { isbn: { equals: book.isbn } },
@@ -73,7 +73,7 @@ for (const [index, { review, category, expectations, ...book }] of books.entries
       category: categoryIds[category],
       review: toLexical(review),
       expectations: expectations.map((text: string) => ({ text })),
-      _status: 'published',
+      _status: status,
     },
   )
   console.log(index + 1, book.title)
