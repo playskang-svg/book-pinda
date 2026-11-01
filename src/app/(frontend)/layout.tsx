@@ -12,7 +12,29 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: SITE_TITLE, template: `%s | ${SITE_NAME}` },
   description: SITE_DESCRIPTION,
+  keywords: [
+    '북핀다',
+    '베스트셀러 순위',
+    '베스트셀러 서평',
+    '책 추천',
+    '도서 추천',
+    '상황별 책 추천',
+    '인생 책 추천',
+    '2026 베스트셀러',
+    '수험서 비교',
+    '자격증 수험서 추천',
+    '컴활 1급 교재 추천',
+    '정보처리기사 교재 비교',
+    '한국사 기본서',
+    '자기계발서 추천',
+    '경제경영 베스트셀러',
+    '소설 베스트셀러',
+    '도서 서평 요약',
+    '온라인 서점 할인',
+    '예스24 할인',
+  ],
   applicationName: SITE_NAME,
+  authors: [{ name: '북핀다' }],
   robots: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
   // Prices must not turn into phone links on mobile browsers.
   formatDetection: { telephone: false },
@@ -48,6 +70,39 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                {
+                  '@type': 'WebSite',
+                  '@id': 'https://book.pinda.kr/#website',
+                  url: 'https://book.pinda.kr',
+                  name: '북핀다',
+                  description: '베스트셀러 서평 및 상황별 맞춤 도서 추천과 할인 혜택 안내',
+                  inLanguage: 'ko-KR',
+                  potentialAction: {
+                    '@type': 'SearchAction',
+                    target: {
+                      '@type': 'EntryPoint',
+                      urlTemplate: 'https://book.pinda.kr/search?q={search_term_string}',
+                    },
+                    'query-input': 'required name=search_term_string',
+                  },
+                },
+                {
+                  '@type': 'Organization',
+                  '@id': 'https://book.pinda.kr/#organization',
+                  name: '북핀다',
+                  url: 'https://book.pinda.kr',
+                  logo: 'https://book.pinda.kr/og-default.png',
+                },
+              ],
+            }),
+          }}
         />
       </head>
       <body>

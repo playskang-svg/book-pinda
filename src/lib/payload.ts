@@ -5,9 +5,9 @@ export const getClient = () => getPayload({ config })
 
 export const SITE_URL = 'https://book.pinda.kr'
 export const SITE_NAME = '북핀다'
-export const SITE_TITLE = `${SITE_NAME} — 베스트셀러 서평과 할인 구매`
+export const SITE_TITLE = `${SITE_NAME} — 베스트셀러 서평 · 상황별 맞춤 책 추천 · 수험서 비교`
 export const SITE_DESCRIPTION =
-  '북핀다는 베스트셀러 서평과 함께 누가 어떤 상황에서 읽으면 좋은지, 읽고 나면 무엇을 기대할 수 있는지 정리하고 할인 구매 링크를 모아 둔 사이트입니다.'
+  '북핀다는 베스트셀러 서평, 상황별 맞춤 도서 추천, 인기 자격증 수험서 비교 분석을 제공하여 내게 꼭 맞는 책을 찾고 할인 혜택까지 연결해 드리는 도서 큐레이션 가이드입니다.'
 
 export const publishedWhere = () => ({
   and: [
