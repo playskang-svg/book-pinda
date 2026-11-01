@@ -1813,7 +1813,7 @@ small {
 
 .talk__bubble {
   position: relative;
-  max-width: min(520px, 100% - 66px);
+  max-width: 520px;
   padding: 10px 15px 12px;
   border: 1px solid var(--line);
   border-radius: 4px 14px 14px;
@@ -2116,4 +2116,28 @@ small {
 
 .quote-shelf strong {
   color: var(--ink);
+}
+
+/* Reading column images stretch to full width; these stay at their own size. */
+.prose .talk__face {
+  width: 60px;
+  max-width: 60px;
+  height: 60px;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+}
+
+.talk__bubble {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.prose .scene img,
+.prose .book-image img {
+  margin: 0;
+}
+
+.prose .scene img {
+  border-radius: 0;
 }
