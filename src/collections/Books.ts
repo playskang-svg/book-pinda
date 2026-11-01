@@ -136,6 +136,24 @@ export const Books: CollectionConfig = {
     },
     { name: 'review', label: '서평', type: 'richText', required: true },
     {
+      name: 'imagine',
+      label: '읽고 난 뒤의 장면',
+      type: 'textarea',
+      admin: { description: '이 책을 산 사람의 달라진 하루를 그립니다. 효과를 보장하는 말은 쓰지 않습니다.' },
+    },
+    {
+      name: 'lossNote',
+      label: '안 읽으면 잃는 것',
+      type: 'textarea',
+      admin: { description: '과장 없이, 계속 쓰게 될 시간과 돈, 놓칠 기회를 적습니다.' },
+    },
+    {
+      name: 'snsHook',
+      label: 'SNS 후킹 문구',
+      type: 'text',
+      admin: { description: '공유 글과 썸네일에 쓰는 한 줄입니다.' },
+    },
+    {
       name: 'situations',
       label: '이런 분이 이런 상황에서',
       type: 'array',

@@ -12,6 +12,7 @@ export function StoreButtons({
     { name: '교보문고', href: book.kyoboUrl },
     { name: '예스24', href: book.yes24Url },
   ].filter((store) => store.href)
+  if (!stores.length) return <small className="store-buttons__pending">구매 링크를 준비하고 있습니다.</small>
   return (
     <div className={compact ? 'store-buttons store-buttons--compact' : 'store-buttons'}>
       {stores.map((store) => (

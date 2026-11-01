@@ -6,6 +6,7 @@ import { cache } from 'react'
 import { BookGrid } from '@/components/BookGrid'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { BuyBox } from '@/components/BuyBox'
+import { HookBox } from '@/components/HookBox'
 import { JsonLd } from '@/components/JsonLd'
 import { RichText } from '@/components/RichText'
 import { ShareBar } from '@/components/ShareBar'
@@ -105,6 +106,12 @@ export default async function BookPage({ params }: Props) {
           <p>{book.summary}</p>
         </aside>
         <RichText data={book.review} />
+        {book.imagine ? (
+          <aside className="imagine-box">
+            <strong>이 책을 읽고 난 뒤의 장면</strong>
+            <p>{book.imagine}</p>
+          </aside>
+        ) : null}
         <section className="fit">
           <h2>이런 분이, 이런 상황에서 읽으면 좋습니다</h2>
           <ul>
@@ -124,6 +131,12 @@ export default async function BookPage({ params }: Props) {
             ))}
           </ul>
         </section>
+        {book.lossNote ? (
+          <aside className="loss-box">
+            <strong>안 읽고 넘어가면</strong>
+            <p>{book.lossNote}</p>
+          </aside>
+        ) : null}
         <BuyBox book={book} title={`${book.title}, 어디서 살까요?`} />
         <p className="disclosure">
           이 서평은 책 소개, 목차, 저자 소개, 출판사 서평 등 공개 자료를 바탕으로 작성했습니다.{' '}
@@ -131,7 +144,11 @@ export default async function BookPage({ params }: Props) {
           <br />
           구매 버튼은 제휴 링크이며, 구매가 이루어지면 일정액의 수수료를 받을 수 있습니다. 책값은 그대로입니다.
         </p>
-        <ShareBar card text={book.summary} title={`${book.title} 서평`} url={url} />
+        {book.snsHook ? (
+          <HookBox hook={book.snsHook} title={`${book.title} 서평`} url={url} />
+        ) : (
+          <ShareBar card text={book.summary} title={`${book.title} 서평`} url={url} />
+        )}
       </div>
       {related.length ? (
         <section className="section section--tone post__related">

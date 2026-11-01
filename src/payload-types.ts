@@ -68,6 +68,8 @@ export interface Config {
   blocks: {};
   collections: {
     books: Book;
+    guides: Guide;
+    'exam-guides': ExamGuide;
     pages: Page;
     categories: Category;
     media: Media;
@@ -80,6 +82,8 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     books: BooksSelect<false> | BooksSelect<true>;
+    guides: GuidesSelect<false> | GuidesSelect<true>;
+    'exam-guides': ExamGuidesSelect<false> | ExamGuidesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -190,6 +194,18 @@ export interface Book {
     };
     [k: string]: unknown;
   };
+  /**
+   * 이 책을 산 사람의 달라진 하루를 그립니다. 효과를 보장하는 말은 쓰지 않습니다.
+   */
+  imagine?: string | null;
+  /**
+   * 과장 없이, 계속 쓰게 될 시간과 돈, 놓칠 기회를 적습니다.
+   */
+  lossNote?: string | null;
+  /**
+   * 공유 글과 썸네일에 쓰는 한 줄입니다.
+   */
+  snsHook?: string | null;
   situations: {
     who: string;
     why: string;
@@ -217,6 +233,84 @@ export interface Category {
   lede: string;
   photoAlt: string;
   order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guides".
+ */
+export interface Guide {
+  id: number;
+  title: string;
+  /**
+   * /guide/<주소>
+   */
+  slug: string;
+  group: 'age' | 'recipient' | 'job';
+  chip: string;
+  order?: number | null;
+  photo: string;
+  photoAlt: string;
+  ogUrl?: string | null;
+  /**
+   * 공유 글과 썸네일에 쓰는 한 줄입니다.
+   */
+  snsHook: string;
+  lede: string;
+  loss: string;
+  picks: {
+    book: number | Book;
+    why: string;
+    imagine: string;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exam-guides".
+ */
+export interface ExamGuide {
+  id: number;
+  title: string;
+  exam: string;
+  /**
+   * /exam/<주소>
+   */
+  slug: string;
+  order?: number | null;
+  verifiedAt: string;
+  ogUrl?: string | null;
+  snsHook: string;
+  lede: string;
+  notice: string;
+  loss: string;
+  books: {
+    title: string;
+    shortTitle: string;
+    publisher: string;
+    publishedOn: string;
+    pages: number;
+    sales?: number | null;
+    listPrice: number;
+    salePrice: number;
+    points?: number | null;
+    coverUrl: string;
+    makeup: string;
+    bestFor: string;
+    caution: string;
+    imagine: string;
+    kyoboUrl?: string | null;
+    yes24Url?: string | null;
+    id?: string | null;
+  }[];
+  verdicts: {
+    who: string;
+    pick: string;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -320,6 +414,14 @@ export interface PayloadLockedDocument {
         value: number | Book;
       } | null)
     | ({
+        relationTo: 'guides';
+        value: number | Guide;
+      } | null)
+    | ({
+        relationTo: 'exam-guides';
+        value: number | ExamGuide;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: number | Page;
       } | null)
@@ -401,6 +503,9 @@ export interface BooksSelect<T extends boolean = true> {
   tagline?: T;
   summary?: T;
   review?: T;
+  imagine?: T;
+  lossNote?: T;
+  snsHook?: T;
   situations?:
     | T
     | {
@@ -417,6 +522,79 @@ export interface BooksSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guides_select".
+ */
+export interface GuidesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  group?: T;
+  chip?: T;
+  order?: T;
+  photo?: T;
+  photoAlt?: T;
+  ogUrl?: T;
+  snsHook?: T;
+  lede?: T;
+  loss?: T;
+  picks?:
+    | T
+    | {
+        book?: T;
+        why?: T;
+        imagine?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exam-guides_select".
+ */
+export interface ExamGuidesSelect<T extends boolean = true> {
+  title?: T;
+  exam?: T;
+  slug?: T;
+  order?: T;
+  verifiedAt?: T;
+  ogUrl?: T;
+  snsHook?: T;
+  lede?: T;
+  notice?: T;
+  loss?: T;
+  books?:
+    | T
+    | {
+        title?: T;
+        shortTitle?: T;
+        publisher?: T;
+        publishedOn?: T;
+        pages?: T;
+        sales?: T;
+        listPrice?: T;
+        salePrice?: T;
+        points?: T;
+        coverUrl?: T;
+        makeup?: T;
+        bestFor?: T;
+        caution?: T;
+        imagine?: T;
+        kyoboUrl?: T;
+        yes24Url?: T;
+        id?: T;
+      };
+  verdicts?:
+    | T
+    | {
+        who?: T;
+        pick?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

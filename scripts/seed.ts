@@ -78,4 +78,19 @@ for (const [index, { review, category, expectations, status, ...book }] of books
   )
   console.log(index + 1, book.title)
 }
+
+const bookIds = Object.fromEntries(
+  (await payload.find({ collection: 'books', limit: 500, depth: 0, draft: true, pagination: false })).docs.map((doc) => [doc.isbn, doc.id]),
+)
+const guides = JSON.parse(fs.readFileSync('scripts/guides.json', 'utf8'))
+for (const guide of guides) {
+  const picks = guide.picks.map(({ isbn, ...pick }: { isbn: string }) => ({ ...pick, book: bookIds[isbn] }))
+  await upsert('guides', { slug: { equals: guide.slug } }, { ...guide, picks })
+  console.log('guide', guide.slug)
+}
+const exams = JSON.parse(fs.readFileSync('scripts/exams.json', 'utf8'))
+for (const exam of exams) {
+  await upsert('exam-guides', { slug: { equals: exam.slug } }, exam)
+  console.log('exam', exam.slug)
+}
 process.exit(0)

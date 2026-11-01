@@ -12,6 +12,8 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Books } from './collections/Books'
 import { Categories } from './collections/Categories'
+import { ExamGuides } from './collections/ExamGuides'
+import { Guides } from './collections/Guides'
 import { Pages } from './collections/Pages'
 import { Navigation } from './globals/Navigation'
 import { ko } from '@payloadcms/translations/languages/ko'
@@ -72,7 +74,7 @@ export default buildConfig({
   },
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
   i18n: { supportedLanguages: { ko }, fallbackLanguage: 'ko' },
-  collections: [Books, Pages, Categories, Media, Users],
+  collections: [Books, Guides, ExamGuides, Pages, Categories, Media, Users],
   globals: [Navigation],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
