@@ -20,6 +20,7 @@ NODE_ENV=production pnpm payload migrate
 
 - Books and reviews are edited at `/admin`. Publishing needs no deploy, but pages stay in the edge cache for 5 minutes.
 - `scripts/seed.ts` loads `scripts/books.json` and can be re-run. It overwrites records with the same ISBN.
+- 3hoursahead caps link creation per day across the whole account. A book with no issued link stays a draft; a book with one shows only that store.
 - Buy links are product deep links issued in the 3hoursahead studio (`linkprice_kyobobook`, `linkprice_yes24`).
 - 3hoursahead forbids the Kyobo brand name in content titles and search keywords, so keep it out of titles and meta tags.
 - `pnpm exec tsx scripts/og.mjs` renders share thumbnails with the snsogg skill into `public/og/`.

@@ -112,7 +112,7 @@ export default async function HomePage() {
 
       <section className="section">
         <div className="frame">
-          <h2>최근 올라온 서평</h2>
+          <h2>막 나온 책의 서평</h2>
           <ReviewList books={newest} />
         </div>
       </section>
