@@ -4,8 +4,10 @@ import { notFound } from 'next/navigation'
 import { cache } from 'react'
 
 import { BookGrid } from '@/components/BookGrid'
+import { BookBody, type BodyBlock, headingsOf, minutesOf } from '@/components/BookBody'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { BuyBox } from '@/components/BuyBox'
+import { CoupangBanner } from '@/components/CoupangBanner'
 import { HookBox } from '@/components/HookBox'
 import { JsonLd } from '@/components/JsonLd'
 import { RichText } from '@/components/RichText'
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = await getBook((await params).isbn)
   if (!book) return {}
   return pageMeta({
-    title: `${book.title} 서평, 이런 분께 맞는 책입니다`,
+    title: `${book.title} ${['novel', 'kids'].includes(categoryOf(book)?.slug ?? '') ? '줄거리' : '내용'} 요약과 서평`,
     description: book.summary,
     path: bookPath(book),
     image: book.ogUrl || undefined,
@@ -52,6 +54,9 @@ export default async function BookPage({ params }: Props) {
   const related = category ? await getBooks({ categoryId: category.id, excludeId: book.id, limit: 4 }) : []
   const url = `${SITE_URL}${bookPath(book)}`
   const rank = rankOf(book)
+  const body = (book.body as BodyBlock[] | null) ?? null
+  const ending = (book.ending as BodyBlock[] | null) ?? null
+  const sections = body ? headingsOf(body) : []
 
   return (
     <article className="post">
@@ -105,7 +110,38 @@ export default async function BookPage({ params }: Props) {
           <strong>💡 핵심 한 줄 요약</strong>
           <p>{book.summary}</p>
         </aside>
-        <RichText data={book.review} />
+        {book.coverage && body ? (
+          <aside className="coverage">
+            <strong>이 글로 알 수 있는 범위 · 약 {minutesOf(body)}분</strong>
+            <p>{book.coverage}</p>
+            {sections.length > 2 ? (
+              <ol>
+                {sections.map((name, index) => (
+                  <li key={name}>
+                    <a href={`#s${index + 1}`}>{name}</a>
+                  </li>
+                ))}
+              </ol>
+            ) : null}
+          </aside>
+        ) : null}
+        {body ? (
+          <BookBody blocks={body} midway={<CoupangBanner slot={category?.slug} />} />
+        ) : (
+          <RichText data={book.review} />
+        )}
+        {ending?.length ? (
+          <details className="ending">
+            <summary>결말까지 읽기 (내용을 밝힙니다)</summary>
+            <BookBody blocks={ending} />
+          </details>
+        ) : null}
+        {book.onlyInBook ? (
+          <aside className="only-in-book">
+            <strong>여기까지 읽어도 책을 펴야만 얻는 것</strong>
+            <p>{book.onlyInBook}</p>
+          </aside>
+        ) : null}
         {book.imagine ? (
           <aside className="imagine-box">
             <strong>이 책을 읽고 난 뒤의 장면</strong>
@@ -139,10 +175,11 @@ export default async function BookPage({ params }: Props) {
         ) : null}
         <BuyBox book={book} title={`${book.title}, 어디서 살까요?`} />
         <p className="disclosure">
-          이 서평은 책 소개, 목차, 저자 소개, 출판사 서평 등 공개 자료를 바탕으로 작성했습니다.{' '}
+          이 글은 책 소개, 목차, 책 속 발췌, 출판사 서평, 공개된 독자 리뷰와 널리 알려진 내용을 바탕으로 AI의 도움을 받아
+          정리했습니다. 저자·출판사와 무관한 개인 해설입니다.{' '}
           <Link href="/about">작성 기준 보기</Link>
           <br />
-          구매 버튼은 제휴 링크이며, 구매가 이루어지면 일정액의 수수료를 받을 수 있습니다. 책값은 그대로입니다.
+          구매 버튼과 쿠팡 배너는 제휴 링크이며, 구매가 이루어지면 일정액의 수수료를 받을 수 있습니다. 책값은 그대로입니다.
         </p>
         {book.snsHook ? (
           <HookBox hook={book.snsHook} title={`${book.title} 서평`} url={url} />

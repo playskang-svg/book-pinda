@@ -40,6 +40,8 @@ const toLexical = (blocks: Block[]) => ({
     'root',
     blocks.map((block) => {
       if ('h2' in block) return element('heading', [textNode(block.h2)], { tag: 'h2' })
+      if ('h3' in block) return element('heading', [textNode(block.h3)], { tag: 'h3' })
+      if ('quote' in block) return element('quote', [textNode(block.cite ? `${block.quote} (${block.cite})` : block.quote)])
       if ('ul' in block) {
         return element(
           'list',
@@ -64,7 +66,7 @@ await payload.updateGlobal({ slug: 'navigation', data: navigation })
 console.log('categories', categories.length, 'pages', pages.length)
 
 const books = JSON.parse(fs.readFileSync('scripts/books.json', 'utf8'))
-for (const [index, { review, category, expectations, status, ...book }] of books.entries()) {
+for (const [index, { review, ending, category, expectations, status, ...book }] of books.entries()) {
   await upsert(
     'books',
     { isbn: { equals: book.isbn } },
@@ -72,6 +74,7 @@ for (const [index, { review, category, expectations, status, ...book }] of books
       ...book,
       category: categoryIds[category],
       review: toLexical(review),
+      ending: ending?.length ? ending : null,
       expectations: expectations.map((text: string) => ({ text })),
       _status: status,
     },

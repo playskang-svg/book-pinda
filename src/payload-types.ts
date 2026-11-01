@@ -174,11 +174,31 @@ export interface Book {
    * 세시간전에서 발급한 https://3ha.in/r/... 비우면 버튼을 숨깁니다.
    */
   yes24Url?: string | null;
+  /**
+   * 쿠팡 파트너스 https://link.coupang.com/a/... 비우면 숨깁니다.
+   */
+  coupangUrl?: string | null;
   tagline: string;
   /**
    * 서평 맨 위 요약 상자와 검색 설명에 함께 쓰입니다.
    */
   summary: string;
+  /**
+   * 글이 책의 어디까지 다루는지 정직하게 한 문장으로 적습니다.
+   */
+  coverage?: string | null;
+  /**
+   * 화면에 나오는 본문. 문단, 대화, 장면, 도표 블록의 배열입니다. 비우면 아래 서평을 보여 줍니다.
+   */
+  body?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   review: {
     root: {
       type: string;
@@ -194,6 +214,22 @@ export interface Book {
     };
     [k: string]: unknown;
   };
+  /**
+   * 소설의 결말 블록. 화면에서 접힌 채로 나옵니다. 모르면 비워 둡니다.
+   */
+  ending?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * 이 글로는 얻을 수 없는, 책에만 있는 것을 적습니다.
+   */
+  onlyInBook?: string | null;
   /**
    * 이 책을 산 사람의 달라진 하루를 그립니다. 효과를 보장하는 말은 쓰지 않습니다.
    */
@@ -247,7 +283,7 @@ export interface Guide {
    * /guide/<주소>
    */
   slug: string;
-  group: 'age' | 'recipient' | 'job';
+  group: 'age' | 'recipient' | 'job' | 'topic';
   chip: string;
   order?: number | null;
   photo: string;
@@ -500,9 +536,14 @@ export interface BooksSelect<T extends boolean = true> {
   points?: T;
   kyoboUrl?: T;
   yes24Url?: T;
+  coupangUrl?: T;
   tagline?: T;
   summary?: T;
+  coverage?: T;
+  body?: T;
   review?: T;
+  ending?: T;
+  onlyInBook?: T;
   imagine?: T;
   lossNote?: T;
   snsHook?: T;

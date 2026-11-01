@@ -1655,3 +1655,465 @@ small {
 .photo-head h1 {
   text-wrap: balance;
 }
+
+/* Top-of-page partner notice: Coupang requires it above the content in a visible colour. */
+.ad-notice {
+  margin: 0;
+  padding: 6px var(--gutter);
+  background: #fff3c4;
+  color: #5a4610;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.store-buttons__coupang {
+  flex: 1 1 100%;
+  color: var(--ink-soft);
+  font-size: 14px;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.store-buttons--compact .store-buttons__coupang {
+  font-size: 12.5px;
+}
+
+.coupang-banner {
+  display: flex;
+  justify-content: center;
+  margin-block: 32px;
+  min-height: 140px;
+}
+
+.coupang-banner iframe {
+  max-width: 100%;
+  border: 0;
+}
+
+.coverage,
+.only-in-book {
+  max-width: 720px;
+  margin: 32px auto;
+  padding: 20px 22px;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.only-in-book {
+  background: #fdf0e8;
+}
+
+.coverage strong,
+.only-in-book strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 16px;
+  color: var(--accent-deep);
+}
+
+.coverage p,
+.only-in-book p {
+  margin: 0;
+  font-size: 16.5px;
+  line-height: 1.75;
+}
+
+.coverage ol {
+  margin: 12px 0 0;
+  padding-left: 22px;
+  font-size: 15.5px;
+}
+
+.coverage li {
+  margin-bottom: 2px;
+}
+
+.coverage a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+.prose h2 {
+  scroll-margin-top: 80px;
+}
+
+.prose blockquote {
+  margin: 28px 0;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--accent-deep);
+  font-family: 'Gowun Batang', serif;
+  font-size: 18.5px;
+  line-height: 1.85;
+}
+
+.ending {
+  max-width: 720px;
+  margin: 32px auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.ending summary {
+  padding: 16px 20px;
+  font-weight: 700;
+  color: var(--accent-deep);
+  cursor: pointer;
+}
+
+.ending .prose {
+  padding: 0 20px 8px;
+}
+
+/* Book-cafe article: the two hosts and small visual aids */
+.prose blockquote cite {
+  display: block;
+  margin-top: 6px;
+  font-family: 'Pretendard Variable', Pretendard, sans-serif;
+  font-size: 13.5px;
+  font-style: normal;
+  color: var(--ink-soft);
+}
+
+.talk {
+  display: grid;
+  gap: 14px;
+  margin: 32px 0;
+  padding: 20px clamp(14px, 3vw, 22px);
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.talk--aside {
+  padding: 0;
+  background: none;
+}
+
+.talk__line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.talk__line--guest {
+  flex-direction: row-reverse;
+}
+
+.talk__face {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--ground);
+  object-fit: cover;
+}
+
+.talk__bubble {
+  position: relative;
+  max-width: min(520px, 100% - 66px);
+  padding: 10px 15px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px 14px 14px;
+  background: #fff;
+}
+
+.talk__line--guest .talk__bubble {
+  border-radius: 14px 4px 14px 14px;
+  background: var(--accent-soft);
+}
+
+.talk__bubble small {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--accent-deep);
+}
+
+.talk__bubble p {
+  margin: 0;
+  font-size: 16.5px;
+  line-height: 1.7;
+}
+
+.scene {
+  margin: 34px 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #2f2620;
+  color: #fbf4e6;
+}
+
+.scene img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.scene figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 18px 22px 20px;
+}
+
+.scene strong {
+  font-family: 'Gowun Batang', serif;
+  font-size: 18px;
+}
+
+.scene span {
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.flow {
+  counter-reset: flow;
+  margin: 28px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prose .flow li {
+  counter-increment: flow;
+  position: relative;
+  margin: 0;
+  padding: 0 0 18px 44px;
+  font-size: 16.5px;
+}
+
+.flow li::before {
+  content: counter(flow);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: center;
+}
+
+.flow li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 32px;
+  bottom: 2px;
+  width: 2px;
+  background: var(--line);
+}
+
+.flow strong {
+  display: block;
+}
+
+.viz-table {
+  margin: 28px 0;
+  overflow-x: auto;
+}
+
+.viz-table table {
+  width: 100%;
+  min-width: 460px;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.viz-table th {
+  padding: 9px 11px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+}
+
+.viz-table td {
+  padding: 9px 11px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.compare section {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.compare strong {
+  color: var(--accent-deep);
+}
+
+.compare ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.prose .compare li {
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+.people {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 10px;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prose .people li {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 13px 15px;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.prose .big-number {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 28px 0;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.big-number strong {
+  flex: none;
+  color: var(--accent);
+  font-family: 'Gowun Batang', serif;
+  font-size: clamp(30px, 6vw, 40px);
+  line-height: 1.1;
+}
+
+.book-image {
+  margin: 30px auto;
+  max-width: 520px;
+}
+
+.book-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.book-image figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* Hosts greeting on list pages */
+.cafe-hello {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.cafe-hello img {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--ground);
+  object-fit: cover;
+}
+
+.cafe-hello p {
+  margin: 0;
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 4px 14px 14px;
+  background: #fff;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.section--tight {
+  padding-block: clamp(32px, 5vw, 56px);
+}
+
+.quote-shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 14px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quote-shelf a {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  height: 100%;
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.quote-shelf a:hover {
+  background: var(--accent-soft);
+}
+
+.quote-shelf blockquote {
+  margin: 0;
+  color: var(--accent-deep);
+  font-family: 'Gowun Batang', serif;
+  font-size: 17.5px;
+  line-height: 1.8;
+}
+
+.quote-shelf span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quote-shelf img {
+  width: 40px;
+  height: auto;
+  border-radius: 2px;
+}
+
+.quote-shelf small {
+  display: grid;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.quote-shelf strong {
+  color: var(--ink);
+}

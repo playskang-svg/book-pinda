@@ -6,6 +6,7 @@ export const GUIDE_GROUPS = [
   { label: '나이대별', value: 'age' },
   { label: '선물할 사람별', value: 'recipient' },
   { label: '직업별', value: 'job' },
+  { label: '주제별', value: 'topic' },
 ] as const
 
 export const Guides: CollectionConfig = {

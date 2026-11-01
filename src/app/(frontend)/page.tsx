@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
+import type { BodyBlock } from '@/components/BookBody'
 import { BookGrid } from '@/components/BookGrid'
 import { CategoryTiles } from '@/components/CategoryTiles'
 import { GuideTiles } from '@/components/GuideTiles'
 import { JsonLd } from '@/components/JsonLd'
 import { PhotoHead } from '@/components/PhotoHead'
 import { ReviewList } from '@/components/ReviewList'
-import { bookPath, getBooks, RANK_PERIOD } from '@/lib/books'
+import { bookPath, categoryOf, getBooks, RANK_PERIOD } from '@/lib/books'
 import { getClient, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from '@/lib/payload'
 import { pageMeta, publisher } from '@/lib/seo'
 
@@ -28,6 +29,14 @@ export default async function HomePage() {
     payload.find({ collection: 'exam-guides', limit: 50, depth: 0, sort: 'order', pagination: false }),
   ])
   const newest = [...books].sort((a, b) => b.publishedOn.localeCompare(a.publishedOn)).slice(0, 6)
+  const marketing = books.filter((book) => categoryOf(book)?.slug === 'marketing').slice(0, 5)
+  // A different few short passages each day, taken from the book pages themselves.
+  const quotable = books.flatMap((book) => {
+    const found = ((book.body as BodyBlock[] | null) ?? []).find((block) => 'quote' in block && block.quote.length <= 110)
+    return found && 'quote' in found ? [{ book, quote: found.quote }] : []
+  })
+  const start = quotable.length ? Math.floor(Date.now() / 86400000) % quotable.length : 0
+  const quotes = [...quotable.slice(start), ...quotable.slice(0, start)].slice(0, 3)
 
   return (
     <>
@@ -53,10 +62,10 @@ export default async function HomePage() {
             ))}
           </div>
         }
-        eyebrow={<p className="post__category">베스트셀러 서평과 할인 구매</p>}
+        eyebrow={<p className="post__category">북핀다 북카페</p>}
         lede="읽고 나면 내 하루가 어떻게 달라지는지 먼저 보고 고르세요. 마음에 들면 바로 할인가로 살 수 있습니다."
-        photo="/photos/hero.webp"
-        photoAlt="서점 서가 앞에서 책을 펼쳐 보는 한국인 여성"
+        photo="/photos/cafe.webp"
+        photoAlt="따뜻한 조명 아래 책장이 늘어선 북카페"
         tall
         title="책값보다 아까운 건, 안 맞는 책에 쓴 시간입니다"
       >
@@ -70,6 +79,35 @@ export default async function HomePage() {
         </div>
       </PhotoHead>
 
+      <section className="section section--tight">
+        <div className="frame">
+          <div className="cafe-hello">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img alt="책방지기 핀이" height={84} src="/characters/host-calm.webp" width={84} />
+            <p>어서 오세요, 책방지기 핀이예요. 앉아서 천천히 보고 가세요. 책의 절반쯤은 제가 풀어 드릴게요. 나머지는 책을 펴야 만나요.</p>
+          </div>
+          {quotes.length ? (
+            <ul className="quote-shelf">
+              {quotes.map(({ book, quote }) => (
+                <li key={book.id}>
+                  <Link href={bookPath(book)}>
+                    <blockquote>{quote}</blockquote>
+                    <span>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img alt="" height={72} loading="lazy" src={book.coverUrl} width={50} />
+                      <small>
+                        <strong>{book.title}</strong>
+                        {book.author}
+                      </small>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      </section>
+
       <section className="section" id="best">
         <div className="frame">
           <h2>이번 주 베스트셀러</h2>
@@ -80,6 +118,19 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
+
+      {marketing.length ? (
+        <section className="section">
+          <div className="frame">
+            <h2>파는 일을 하는 사람의 서가</h2>
+            <p className="section-lede">스토리, 퍼널, 카피, 포지셔닝. 고객의 마음을 움직이는 일에 먼저 펴 볼 책들입니다.</p>
+            <BookGrid books={marketing} />
+            <Link className="text-link" href="/guide/marketer">
+              마케터의 서가 전체 보기
+            </Link>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section section--tone" id="guide">
         <div className="frame">
