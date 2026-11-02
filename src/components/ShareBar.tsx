@@ -14,6 +14,23 @@ const BRANDS = {
   naver: 'M16.273 12.845 7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845Z',
 }
 
+// In-app browsers and unfocused windows refuse the clipboard API, so fall back to the old copy command.
+async function copyLink(url: string) {
+  try {
+    await navigator.clipboard.writeText(url)
+    return true
+  } catch {
+    const area = document.createElement('textarea')
+    area.value = url
+    area.style.position = 'fixed'
+    document.body.append(area)
+    area.select()
+    const ok = document.execCommand('copy')
+    area.remove()
+    return ok
+  }
+}
+
 function Brand({ path, size = 18 }: { path: string; size?: number }) {
   return (
     <svg aria-hidden="true" fill="currentColor" height={size} viewBox="0 0 24 24" width={size}>
@@ -58,7 +75,11 @@ export function ShareBar({
   useEffect(() => setCanShare(typeof navigator.share === 'function'), [])
 
   const copy = async () => {
-    await navigator.clipboard.writeText(url)
+    if (!(await copyLink(url))) {
+      setNote('복사하지 못했습니다. 주소창의 주소를 복사해 주세요.')
+      setTimeout(() => setNote(''), 5000)
+      return
+    }
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -81,12 +102,11 @@ export function ShareBar({
       }
       return
     }
-    try {
-      await navigator.clipboard.writeText(url)
-      setNote('링크를 복사했습니다. 카카오톡 대화창에 붙여 넣으면 미리보기 카드로 보입니다.')
-    } catch {
-      setNote('복사하지 못했습니다. 주소창의 주소를 복사해 주세요.')
-    }
+    setNote(
+      (await copyLink(url))
+        ? '링크를 복사했습니다. 카카오톡 대화창에 붙여 넣으면 미리보기 카드로 보입니다.'
+        : '복사하지 못했습니다. 주소창의 주소를 복사해 주세요.',
+    )
     setTimeout(() => setNote(''), 5000)
   }
 
