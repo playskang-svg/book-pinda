@@ -632,6 +632,21 @@ small {
   filter: brightness(1.1);
 }
 
+.share__icon--kakao {
+  background: #fee500;
+  color: #191919;
+}
+
+.share__note {
+  width: 100%;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.photo-head .share__note {
+  color: #fff;
+}
+
 .share__icon--copy {
   background: #fff;
   border: 1.5px solid var(--line);
