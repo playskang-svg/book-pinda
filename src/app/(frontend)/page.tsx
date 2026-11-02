@@ -15,7 +15,7 @@ import { pageMeta, publisher } from '@/lib/seo'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  ...pageMeta({ title: SITE_TITLE, description: SITE_DESCRIPTION, path: '/' }),
+  ...pageMeta({ title: SITE_TITLE, shareTitle: '책값보다 아까운 건, 안 맞는 책에 쓴 시간입니다', description: SITE_DESCRIPTION, path: '/' }),
   title: { absolute: SITE_TITLE },
 }
 

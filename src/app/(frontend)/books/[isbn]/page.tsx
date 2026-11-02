@@ -31,11 +31,15 @@ const getBook = cache(async (isbn: string) => {
   return docs[0] ?? null
 })
 
+const shareTitleOf = (book: { title: string; snsHook?: string | null }) =>
+  book.snsHook ? `《${book.title}》 ${book.snsHook}` : `《${book.title}》`
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = await getBook((await params).isbn)
   if (!book) return {}
   return pageMeta({
     title: `${book.title} ${['novel', 'kids'].includes(categoryOf(book)?.slug ?? '') ? '줄거리' : '내용'} 요약과 서평`,
+    shareTitle: shareTitleOf(book),
     description: book.summary,
     path: bookPath(book),
     image: book.ogUrl || undefined,
@@ -182,9 +186,9 @@ export default async function BookPage({ params }: Props) {
           구매 버튼과 쿠팡 배너는 제휴 링크이며, 구매가 이루어지면 일정액의 수수료를 받을 수 있습니다. 책값은 그대로입니다.
         </p>
         {book.snsHook ? (
-          <HookBox hook={book.snsHook} title={`${book.title} 서평`} url={url} />
+          <HookBox hook={book.snsHook} title={shareTitleOf(book)} url={url} />
         ) : (
-          <ShareBar card text={book.summary} title={`${book.title} 서평`} url={url} />
+          <ShareBar card text={book.summary} title={shareTitleOf(book)} url={url} />
         )}
       </div>
       {related.length ? (
