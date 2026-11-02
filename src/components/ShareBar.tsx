@@ -23,7 +23,7 @@ async function copyLink(url: string) {
     const area = document.createElement('textarea')
     area.value = url
     area.style.position = 'fixed'
-    document.body.append(area)
+    document.body.appendChild(area)
     area.select()
     const ok = document.execCommand('copy')
     area.remove()
