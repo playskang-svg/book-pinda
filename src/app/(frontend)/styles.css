@@ -1964,6 +1964,10 @@ small {
   margin: 28px 0;
 }
 
+.compare--table {
+  display: block;
+}
+
 .compare section {
   padding: 16px 18px;
   border: 1px solid var(--line);

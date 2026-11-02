@@ -76,7 +76,7 @@ export default async function ExamGuidePage({ params }: Props) {
           <p>{guide.loss}</p>
         </aside>
 
-        <section className="compare">
+        <section className="compare compare--table">
           <h2>한눈에 비교</h2>
           <div className="compare__scroll" tabIndex={0}>
             <table>
